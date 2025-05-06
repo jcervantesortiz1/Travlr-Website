@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>Welcome to Travlr Getaways!</h1>
+
+  <!-- Display a message depending on the login status -->
+  <div *ngIf="!isLoggedIn()">Please log in to continue.</div>
+  <div *ngIf="isLoggedIn()">You're logged in! Explore our trips now.</div>
+
+  <!-- Display the "Add Trip" button if the user is logged in -->
+  <div *ngIf="isLoggedIn()" class="mb-3">
+    <button (click)="addTrip()" class="btn btn-info">Add Trip</button>
+  </div>
+
+  
+
+  <!-- Display the trip cards if trips are available -->
+  <div class="row mt-4" *ngIf="trips.length > 0">
+    <div *ngFor="let trip of trips" class="col-md-4">
+      <div class="card mb-4">
+        <!-- Add an image for each trip, with correct path from assets folder -->
+        <img class="card-img-top" [src]="'/images/' + trip.image" alt="{{ trip.name }}">
+
+        <div class="card-body">
+          <h5 class="card-title">{{ trip.name }}</h5>
+
+          <!-- Render the trip description as HTML -->
+          <p class="card-text" [innerHTML]="trip.description"></p>
+
+          <p class="card-text"><strong>Price:</strong> ${{ trip.perPerson | number:'1.2-2' }}</p>
+
+          <!-- Display "Edit Trip" button if logged in -->
+          <button *ngIf="isLoggedIn()" (click)="editTrip(trip)" class="btn btn-info" >Edit Trip</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
